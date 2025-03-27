@@ -10,8 +10,7 @@ const Register = () => {
 
     const [enterOTPFlag, setEnterOTPFlag] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
-    const [errorMessages, setErrorMessages] = useState('');
-    const [successMessages, setSuccessMessages] = useState('');
+    const [responseMessages, setResponseMessages] = useState('');
     const [icon, setIcon] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
@@ -26,12 +25,13 @@ const Register = () => {
         try {
             const response = await axios.post('http://localhost:5000/users/register', payload);
             if (response.data.message === 'User registered successfully') {
-                setSuccessMessages(response.data.message);
+                setResponseMessages(response.data.message);
                 setIcon(<IoCheckmarkDoneCircle className='text-green-600 inline' />);
                 setShowPopup(true);
             }
             else {
-                setErrorMessages(response.data.message);
+                console.log(response);
+                setResponseMessages(response.data.error);
                 setIcon(<TiDelete className='text-red-600 inline' />);
                 setShowPopup(true);
             }
@@ -54,12 +54,12 @@ const Register = () => {
                 setEnterOTPFlag(true);
                 //disable email and password fields
                 disableFields();
-                setSuccessMessages(response.data.message);
+                setResponseMessages(response.data.message);
                 setIcon(<IoCheckmarkDoneCircle className='text-green-600 inline' />);
                 setShowPopup(true);
             }
             else {
-                setErrorMessages(response.data.message);
+                setResponseMessages(response.data.error);
                 setIcon(<TiDelete className='text-red-600 inline' />);
                 setShowPopup(true);
             }
@@ -96,7 +96,7 @@ const Register = () => {
     }
 
     useEffect(() => {
-        if (count > 0 && successMessages === "User registered successfully") {
+        if (count > 0 && responseMessages === "User registered successfully") {
             const interval = setInterval(() => {
                 setCount(prevCount => prevCount - 1);
             }, 1000);
@@ -107,7 +107,7 @@ const Register = () => {
         if (count === 0) {
             navigate('/');
         }
-    }, [count, successMessages, navigate]);
+    }, [count, responseMessages, navigate]);
 
     return (
         <div className='flex flex-col justify-center items-center h-screen'>
@@ -146,7 +146,7 @@ const Register = () => {
             {showPopup && (
                 <div className='fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.9)] flex justify-center items-center'>
                     <div className='bg-white px-20 py-10 rounded-md space-y-5 items-center justify-center flex flex-col'>
-                        <h1 className='flex items-center justify-center space-x-2'><span className='text-2xl'>{successMessages == "User registered successfully" ? (successMessages + " Redirecting to login page in " + count + " seconds") : successMessages}</span> <span className='text-5xl'>{icon}</span></h1>
+                        <h1 className='flex items-center justify-center space-x-2'><span className='text-2xl'>{responseMessages == "User registered successfully" ? (responseMessages + " Redirecting to login page in " + count + " seconds") : responseMessages}</span> <span className='text-5xl'>{icon}</span></h1>
                         <button className='bg-blue-500 text-white p-2 rounded-md w-1/3 mx-auto' onClick={() => { setShowPopup(false) }}>
                             OK
                         </button>
