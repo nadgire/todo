@@ -37,7 +37,7 @@ const ResetPassword = () => {
         }
 
         try {
-            const response = await axios.post(`${ process.env.BASE_URL_PROD }/users/confirm-otp`, payload);
+            const response = await axios.post(`${ process.env.REACT_APP_BASE_URL_PROD }/users/confirm-otp`, payload);
             if (response.data.message === 'OTP matched') {
                 setEnterOTPFlag(false);
 
@@ -63,7 +63,7 @@ const ResetPassword = () => {
             email: values.email
         }
         try {
-            const response = await axios.put(`${ process.env.BASE_URL_PROD }/users/forgot-pass-otp`, payload);
+            const response = await axios.put(`${ process.env.REACT_APP_BASE_URL_PROD }/users/forgot-pass-otp`, payload);
             if (response.data.message === 'OTP sent successfully') {
                 setEnterOTPFlag(true);
                 $('#email').prop('disabled', true);
@@ -88,7 +88,7 @@ const ResetPassword = () => {
         }
 
         try {
-            const response = await axios.post(`${ process.env.BASE_URL_PROD }/users/reset-password`, payload);
+            const response = await axios.post(`${ process.env.REACT_APP_BASE_URL_PROD }/users/reset-password`, payload);
             console.log(response);
             if (response.data.message === 'Password reset successful') {
                 toast.success(response.data.message);

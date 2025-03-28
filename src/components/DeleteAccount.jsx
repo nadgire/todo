@@ -21,7 +21,7 @@ const DeleteAccount = (props) => {
         setIsSubmitting(true);
         try {
             const payload = { email: jwtDecode(token).username, oldPassword: values.currentPassword }
-            const response = await axios.put(`${process.env.BASE_URL_PROD}/users/delete-account`, payload)
+            const response = await axios.put(`${process.env.REACT_APP_BASE_URL_PROD}/users/delete-account`, payload)
             if (response.data.message === 'Account deleted successfully') {
                 props.divFlag(false);
                 toast.success(response.data.message);
