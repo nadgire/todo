@@ -17,7 +17,11 @@ const Register = () => {
             .required('Email is required'),
         password: Yup.string()
             .min(8, 'Password must be at least 8 characters')
-            .required('Password is required'),
+            .required('Password is required')
+            .matches(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{6,}$/,
+                'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character'
+            ),
     });
 
     async function handleSubmit(values) {
