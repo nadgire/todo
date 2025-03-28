@@ -26,7 +26,7 @@ const Dashboard = () => {
 
     async function getAllTasks(username) {
         const payload = { email: username }
-        const response = await axios.post('http://localhost:5000/users/get-all-tasks', payload);
+        const response = await axios.post(`${process.env.BASE_URL_PROD}/users/get-all-tasks`, payload);
         if (response.data.message === 'No tasks found') {
         }
         if (response.data.message === 'Tasks fetched succssfully') {
@@ -39,7 +39,7 @@ const Dashboard = () => {
 
     async function handleSubmit(values) {
         const payload = { title: values.title, dueDate: values.dueDate, email: jwtDecode(token).username }
-        const response = await axios.post('http://localhost:5000/users/add-task', payload);
+        const response = await axios.post(`${process.env.BASE_URL_PROD}/users/add-task`, payload);
         console.log(response);
         if (response.data.message === 'Task added successfully') {
             toast.success(response.data.message);
@@ -71,7 +71,7 @@ const Dashboard = () => {
 
     async function funComplete(x) {
         const payload = { email: jwtDecode(token).username, ID: x.ID }
-        const response = await axios.put('http://localhost:5000/users/updateTaskStatus', payload)
+        const response = await axios.put(`${process.env.BASE_URL_PROD}/users/updateTaskStatus`, payload)
         const temp = response.data.tasks.filter((x) => {
             return !x.isDeleted;
         });
@@ -86,7 +86,7 @@ const Dashboard = () => {
 
     async function funDelete(x) {
         const payload = { email: jwtDecode(token).username, ID: x.ID }
-        const response = await axios.put('http://localhost:5000/users/deleteTask', payload)
+        const response = await axios.put(`${ process.env.BASE_URL_PROD }/users/deleteTask`, payload)
         const temp = response.data.tasks.filter((x) => {
             return !x.isDeleted;
         });

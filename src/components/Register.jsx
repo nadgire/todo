@@ -32,7 +32,7 @@ const Register = () => {
             email: values.email, password: values.password, otp: values.otp
         }
         try {
-            const response = await axios.post('http://localhost:5000/users/register', payload);
+            const response = await axios.post(`${process.env.BASE_URL_PROD}/users/register`, payload);
             if (response.data.message === 'User registered successfully') {
                 toast.success(response.data.message);
                 setTimeout(() => {
@@ -57,7 +57,7 @@ const Register = () => {
             email: values.email, password: values.password
         }
         try {
-            const response = await axios.post('http://localhost:5000/users/register-otp', payload);
+            const response = await axios.post(`${ process.env.BASE_URL_PROD }/users/register-otp`, payload);
             if (response.data.message === 'OTP sent successfully') {
                 setEnterOTPFlag(true);
                 //disable email and password fields

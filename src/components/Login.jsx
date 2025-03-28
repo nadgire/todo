@@ -27,7 +27,7 @@ const Login = () => {
         try {
             console.log(values);
 
-            const response = await axios.post('http://localhost:5000/users/login', payload);
+            const response = await axios.post(`${ process.env.BASE_URL_PROD }/users/login`, payload);
             console.log(response)
             if (response.data.message === 'Login successful') {
                 localStorage.setItem('token', response.data.token);
