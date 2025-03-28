@@ -1,20 +1,23 @@
-import { Formik, Field } from 'formik'
+import { Formik, Field, ErrorMessage } from 'formik'
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { TiDelete } from "react-icons/ti";
-import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import toast, { Toaster } from 'react-hot-toast';
+import * as Yup from 'yup';
 
 const Login = () => {
 
     const [isLoading, setIsLoading] = useState(false);
-    const [showPopup, setShowPopup] = useState(false);
-    const [errorMessages, setErrorMessages] = useState('');
-    const [successMessages, setSuccessMessages] = useState('');
     const navigate = useNavigate();
-    const [icon, setIcon] = useState();
-
+    const validationSchema = Yup.object({
+        email: Yup.string()
+            .email('Invalid email address')
+            .required('Email is required'),
+        password: Yup.string()
+            .min(8, 'Password must be at least 8 characters')
+            .required('Password is required'),
+    });
 
     async function handleSubmit(values) {
         setIsLoading(true);
@@ -25,18 +28,16 @@ const Login = () => {
             console.log(values);
 
             const response = await axios.post('http://localhost:5000/users/login', payload);
-            console.log(response.data);
-
+            console.log(response)
             if (response.data.message === 'Login successful') {
-                setSuccessMessages(response.data.message);
-                setShowPopup(true);
-                setTimeout(() => {
-                    navigate('/dashboard');
-                }, 2000);
+                localStorage.setItem('token', response.data.token);
+
+                navigate('/dashboard');
+                window.location.reload();
+
             }
             else {
-                setErrorMessages(response.message);
-                setShowPopup(true);
+                toast.error(response.data.message);
             }
 
         } catch (error) {
@@ -52,11 +53,15 @@ const Login = () => {
             <h1 className='text-5xl font-bold'>LOGIN</h1>
             <div className='my-10'>
 
-                <Formik initialValues={{ email: '', password: '' }} onSubmit={(values) => { handleSubmit(values) }}>
+                <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={(values) => { handleSubmit(values) }}>
                     {({ handleChange, handleSubmit, handleReset }) => (
                         <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-96'>
-                            <Field name='email' type='email' placeholder='Email' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
-                            <Field name='password' type='password' placeholder='Password' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                            <Field id={'email'} name='email' type='email' placeholder='Email' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                            <ErrorMessage name="email" component="div" className="error text-red-600" />
+
+                            <Field id={'password'} name='password' type='password' placeholder='Password' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                            <ErrorMessage name="password" component="div" className="error text-red-600" />
+
                             <div className='flex gap-4 items-center justify-center'>
                                 <button type='submit' className={`text-white p-2 rounded-md w-1/3 ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} disabled={isLoading}>
                                     {isLoading ? 'Logging in...' : 'Login'}
@@ -77,16 +82,7 @@ const Login = () => {
                     )}
                 </Formik>
             </div>
-            {showPopup && (
-                <div className='fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.9)] flex justify-center items-center'>
-                    <div className='bg-white px-20 py-10 rounded-md space-y-5 items-center justify-center flex flex-col'>
-                        <h1 className='flex items-center justify-center space-x-2'><span className='text-2xl'>{successMessages}</span> <span className='text-5xl'>{icon}</span></h1>
-                        <button className='bg-blue-500 text-white p-2 rounded-md w-1/3 mx-auto' onClick={() => { setShowPopup(false) }}>
-                            OK
-                        </button>
-                    </div>
-                </div>
-            )}
+            <div><Toaster position="bottom-right" reverseOrder={false} /></div>
         </div>
     )
 }

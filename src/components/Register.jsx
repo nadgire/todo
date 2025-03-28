@@ -1,20 +1,24 @@
-import { Formik, Field } from 'formik'
+import { Formik, Field, ErrorMessage } from 'formik'
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useState, useEffect } from 'react'
-import { TiDelete } from "react-icons/ti";
-import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast';
+import * as Yup from 'yup';
 
 const Register = () => {
 
     const [enterOTPFlag, setEnterOTPFlag] = useState(false);
-    const [showPopup, setShowPopup] = useState(false);
-    const [responseMessages, setResponseMessages] = useState('');
-    const [icon, setIcon] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const [count, setCount] = useState(5);
+    const validationSchema = Yup.object({
+        email: Yup.string()
+            .email('Invalid email address')
+            .required('Email is required'),
+        password: Yup.string()
+            .min(8, 'Password must be at least 8 characters')
+            .required('Password is required'),
+    });
 
     async function handleSubmit(values) {
         setIsLoading(true);
@@ -25,15 +29,14 @@ const Register = () => {
         try {
             const response = await axios.post('http://localhost:5000/users/register', payload);
             if (response.data.message === 'User registered successfully') {
-                setResponseMessages(response.data.message);
-                setIcon(<IoCheckmarkDoneCircle className='text-green-600 inline' />);
-                setShowPopup(true);
+                toast.success(response.data.message);
+                setTimeout(() => {
+                    navigate('/');
+                }, 3000);
             }
             else {
                 console.log(response);
-                setResponseMessages(response.data.error);
-                setIcon(<TiDelete className='text-red-600 inline' />);
-                setShowPopup(true);
+                toast.error(response.data.error);
             }
         } catch (error) {
             console.log(error);
@@ -54,14 +57,10 @@ const Register = () => {
                 setEnterOTPFlag(true);
                 //disable email and password fields
                 disableFields();
-                setResponseMessages(response.data.message);
-                setIcon(<IoCheckmarkDoneCircle className='text-green-600 inline' />);
-                setShowPopup(true);
+                toast.success(response.data.message);
             }
             else {
-                setResponseMessages(response.data.error);
-                setIcon(<TiDelete className='text-red-600 inline' />);
-                setShowPopup(true);
+                toast.error(response.data.message);
             }
 
         } catch (error) {
@@ -95,30 +94,19 @@ const Register = () => {
         setEnterOTPFlag(false);
     }
 
-    useEffect(() => {
-        if (count > 0 && responseMessages === "User registered successfully") {
-            const interval = setInterval(() => {
-                setCount(prevCount => prevCount - 1);
-            }, 1000);
-    
-            return () => clearInterval(interval); // Clean up the interval when count reaches 0
-        }
-    
-        if (count === 0) {
-            navigate('/');
-        }
-    }, [count, responseMessages, navigate]);
-
     return (
         <div className='flex flex-col justify-center items-center h-screen'>
             <h1 className='text-5xl font-bold'>REGISTER</h1>
             <div className='my-10'>
 
-                <Formik initialValues={{ email: '', password: '' }} onSubmit={(values) => { handleSubmit(values) }}>
+                <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={(values) => { handleSubmit(values) }}>
                     {({ handleChange, handleSubmit, handleReset, values }) => (
                         <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-96'>
-                            <Field name='email' type='email' placeholder='Email' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
-                            <Field name='password' type='password' placeholder='Password' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                            <Field id='email' name='email' type='email' placeholder='Email' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                            <ErrorMessage name="email" component="div" className="error text-red-600" />
+                            <Field id='password' name='password' type='password' placeholder='Password' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                            <ErrorMessage name="password" component="div" className="error text-red-600" />
+
                             {enterOTPFlag && (
                                 <Field name='otp' type='text' placeholder='Enter OTP' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
                             )}
@@ -143,16 +131,7 @@ const Register = () => {
                 </Formik>
             </div>
             {/* creating popup dialog */}
-            {showPopup && (
-                <div className='fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.9)] flex justify-center items-center'>
-                    <div className='bg-white px-20 py-10 rounded-md space-y-5 items-center justify-center flex flex-col'>
-                        <h1 className='flex items-center justify-center space-x-2'><span className='text-2xl'>{responseMessages == "User registered successfully" ? (responseMessages + " Redirecting to login page in " + count + " seconds") : responseMessages}</span> <span className='text-5xl'>{icon}</span></h1>
-                        <button className='bg-blue-500 text-white p-2 rounded-md w-1/3 mx-auto' onClick={() => { setShowPopup(false) }}>
-                            OK
-                        </button>
-                    </div>
-                </div>
-            )}
+            <div><Toaster position="bottom-right" reverseOrder={false} /></div>
         </div>
     )
 }
