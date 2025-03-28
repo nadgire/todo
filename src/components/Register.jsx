@@ -57,7 +57,9 @@ const Register = () => {
             email: values.email, password: values.password
         }
         try {
-            const response = await axios.post(`${ process.env.REACT_APP_BASE_URL_PROD }/users/register-otp`, payload);
+            const url = `${process.env.REACT_APP_BASE_URL_PROD}/users/register-otp`;
+            console.log(url);
+            const response = await axios.post(url, payload);
             if (response.data.message === 'OTP sent successfully') {
                 setEnterOTPFlag(true);
                 //disable email and password fields
