@@ -30,7 +30,7 @@ const ChangePassword = (props) => {
         setIsSubmitting(true);
         try {
             const payload = { email: jwtDecode(token).username, oldPassword: values.currentPassword, newPassword: values.newPassword }
-            const response = await axios.post(`${process.env.REACT_APP_BASE_URL_PROD}/users/change-password`, payload)
+            const response = await axios.post(`https://todo-backend-4atq.onrender.com/users/change-password`, payload)
             if (response.data.message === 'Password changed successfully') {
                 toast.success(response.data.message);
                 props.divFlag(false);

@@ -32,7 +32,7 @@ const Register = () => {
             email: values.email, password: values.password, otp: values.otp
         }
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BASE_URL_PROD}/users/register`, payload);
+            const response = await axios.post(`https://todo-backend-4atq.onrender.com/users/register`, payload);
             if (response.data.message === 'User registered successfully') {
                 toast.success(response.data.message);
                 setTimeout(() => {
@@ -57,7 +57,7 @@ const Register = () => {
             email: values.email, password: values.password
         }
         try {
-            const url = `${process.env.REACT_APP_BASE_URL_PROD}/users/register-otp`;
+            const url = `https://todo-backend-4atq.onrender.com/users/register-otp`;
             console.log(url);
             const response = await axios.post(url, payload);
             if (response.data.message === 'OTP sent successfully') {
