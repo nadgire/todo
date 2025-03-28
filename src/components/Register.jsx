@@ -10,7 +10,7 @@ const Register = () => {
 
     const [enterOTPFlag, setEnterOTPFlag] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    
+
     const navigate = useNavigate();
     const validationSchema = Yup.object({
         email: Yup.string()
@@ -101,41 +101,44 @@ const Register = () => {
 
     return (
         <div className='flex flex-col justify-center items-center h-screen'>
-            <h1 className='text-5xl font-bold'>REGISTER</h1>
-            <div className='my-10'>
 
-                <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={(values) => { handleSubmit(values) }}>
-                    {({ handleChange, handleSubmit, handleReset, values }) => (
-                        <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-96'>
-                            <Field id='email' name='email' type='email' placeholder='Email' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
-                            <ErrorMessage name="email" component="div" className="error text-red-600" />
-                            <Field id='password' name='password' type='password' placeholder='Password' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
-                            <ErrorMessage name="password" component="div" className="error text-red-600" />
+            <div className='p-10 rounded-2xl shadow-2xl text-center'>
+                <h1 className='text-5xl font-bold'>REGISTER</h1>
+                <div className='my-10'>
 
-                            {enterOTPFlag && (
-                                <Field name='otp' type='text' placeholder='Enter OTP' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
-                            )}
-                            <div className='flex justify-center items-center'>
-                                {!enterOTPFlag && (<button type='button' className={`text-white p-2 rounded-md w-1/3 mx-auto ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} disabled={isLoading} onClick={() => { requestOTP(values) }}>
-                                    {isLoading ? 'Requesting...' : 'Request OTP'}
-                                </button>)}
-                                {enterOTPFlag && (<button type='submit' className={`text-white p-2 rounded-md w-1/2 mx-auto whitespace-nowrap ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} onClick={handleSubmit}>
-                                    {isLoading ? 'Verifying...' : 'Verify & Register'}
-                                </button>)}
-                                <button type='reset' className='bg-red-500 text-white p-2 rounded-md w-1/3 mx-auto' onClick={() => { handleReset(); enableFields(); }}>
-                                    Reset
-                                </button>
-                            </div>
-                            <div className='flex flex-col gap-1'>
-                                <Link to={'/'} className='mx-auto w-fit'>
-                                    Already a user? Login here!
-                                </Link>
-                            </div>
-                        </form>
-                    )}
-                </Formik>
+                    <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={(values) => { handleSubmit(values) }}>
+                        {({ handleChange, handleSubmit, handleReset, values }) => (
+                            <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-96'>
+                                <Field id='email' name='email' type='email' placeholder='Email' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                                <ErrorMessage name="email" component="div" className="error text-red-600" />
+                                <Field id='password' name='password' type='password' placeholder='Password' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                                <ErrorMessage name="password" component="div" className="error text-red-600" />
+
+                                {enterOTPFlag && (
+                                    <Field name='otp' type='text' placeholder='Enter OTP' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                                )}
+                                <div className='flex justify-center items-center'>
+                                    {!enterOTPFlag && (<button type='button' className={`text-white p-2 rounded-md w-1/3 mx-auto ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} disabled={isLoading} onClick={() => { requestOTP(values) }}>
+                                        {isLoading ? 'Requesting...' : 'Request OTP'}
+                                    </button>)}
+                                    {enterOTPFlag && (<button type='submit' className={`text-white p-2 rounded-md w-1/2 mx-auto whitespace-nowrap ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} onClick={handleSubmit}>
+                                        {isLoading ? 'Verifying...' : 'Verify & Register'}
+                                    </button>)}
+                                    <button type='reset' className='bg-red-500 text-white p-2 rounded-md w-1/3 mx-auto' onClick={() => { handleReset(); enableFields(); }}>
+                                        Reset
+                                    </button>
+                                </div>
+                                <div className='flex flex-col gap-1'>
+                                    <Link to={'/'} className='mx-auto w-fit'>
+                                        Already a user? Login here!
+                                    </Link>
+                                </div>
+                            </form>
+                        )}
+                    </Formik>
+                </div>
             </div>
-            {/* creating popup dialog */}
+
             <div><Toaster position="bottom-right" reverseOrder={false} /></div>
         </div>
     )

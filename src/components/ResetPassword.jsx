@@ -110,48 +110,52 @@ const ResetPassword = () => {
 
     return (
         <div className='flex flex-col justify-center items-center h-screen '>
-            <h1 className='text-3xl font-bold'>RESET PASSWORD</h1>
-            <div className='my-10'>
 
-                <Formik initialValues={{ email: '' }} validationSchema={validationSchema} onSubmit={(values) => { handleSubmit(values) }}>
-                    {({ handleChange, handleSubmit, handleReset, values }) => (
-                        <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-96'>
-                            <Field id='email' name='email' type='email' placeholder='Email' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+            <div className='text-center shadow-2xl rounded-2xl p-10'>
+                <h1 className='text-3xl font-bold'>RESET PASSWORD</h1>
+                <div className='my-10'>
 
-                            {enterOTPFlag && (
-                                <Field id="otp" name='otp' type='text' placeholder='Enter OTP' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
-                            )}
+                    <Formik initialValues={{ email: '' }} validationSchema={validationSchema} onSubmit={(values) => { handleSubmit(values) }}>
+                        {({ handleChange, handleSubmit, handleReset, values }) => (
+                            <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-96'>
+                                <Field id='email' name='email' type='email' placeholder='Email' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
 
-                            {!enterOTPFlag && !enterPassFlag && (
-                                <button type='button' className={`text-white p-2 rounded-md w-48 mx-auto ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} onClick={() => { requestOTP(values) }} disabled={isLoading}>
-                                    {isLoading ? "Requesting..." : "Request OTP"}
-                                </button>
-                            )}
+                                {enterOTPFlag && (
+                                    <Field id="otp" name='otp' type='text' placeholder='Enter OTP' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                                )}
 
-                            {enterOTPFlag && (
-                                <button type='button' className={`text-white p-2 rounded-md w-48 mx-auto ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} onClick={() => { submitOTP(values) }}>
-                                    {isLoading ? "Submitting..." : "Submit OTP"}
-                                </button>
-                            )}
+                                {!enterOTPFlag && !enterPassFlag && (
+                                    <button type='button' className={`text-white p-2 rounded-md w-48 mx-auto ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} onClick={() => { requestOTP(values) }} disabled={isLoading}>
+                                        {isLoading ? "Requesting..." : "Request OTP"}
+                                    </button>
+                                )}
 
-                            {enterPassFlag && (
-                                <>
-                                    <Field id='newPassword' name='newPassword' type='password' placeholder='New password' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
-                                    <Field id='confirmPassword' name='confirmPassword' type='password' placeholder='Confirm password' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
-                                    <button type='button' className={`text-white p-2 rounded-md w-48 mx-auto ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} onClick={handleSubmit}>
-                                        {isLoading ? "Resetting..." : "Reset password"}
-                                    </button></>
-                            )}
+                                {enterOTPFlag && (
+                                    <button type='button' className={`text-white p-2 rounded-md w-48 mx-auto ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} onClick={() => { submitOTP(values) }}>
+                                        {isLoading ? "Submitting..." : "Submit OTP"}
+                                    </button>
+                                )}
 
-                            <div className='flex flex-col gap-1'>
-                                <Link to={'/'} className='mx-auto w-fit'>
-                                    Already a user? Login here!
-                                </Link>
-                            </div>
-                        </form>
-                    )}
-                </Formik>
+                                {enterPassFlag && (
+                                    <>
+                                        <Field id='newPassword' name='newPassword' type='password' placeholder='New password' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                                        <Field id='confirmPassword' name='confirmPassword' type='password' placeholder='Confirm password' className='border-2 border-gray-300 p-2 rounded-md' onChange={handleChange} />
+                                        <button type='button' className={`text-white p-2 rounded-md w-48 mx-auto ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`} onClick={handleSubmit}>
+                                            {isLoading ? "Resetting..." : "Reset password"}
+                                        </button></>
+                                )}
+
+                                <div className='flex flex-col gap-1'>
+                                    <Link to={'/'} className='mx-auto w-fit'>
+                                        Already a user? Login here!
+                                    </Link>
+                                </div>
+                            </form>
+                        )}
+                    </Formik>
+                </div>
             </div>
+
             <div><Toaster position="bottom-right" reverseOrder={false} /></div>
         </div>
     )
