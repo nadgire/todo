@@ -115,6 +115,7 @@ const ChangePassword = (props) => {
 
                 </Formik>
             </div>
+            <div><Toaster position="bottom-right" reverseOrder={false} /></div>
         </div >
     )
 }

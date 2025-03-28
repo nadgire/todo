@@ -10,6 +10,7 @@ const Register = () => {
 
     const [enterOTPFlag, setEnterOTPFlag] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    
     const navigate = useNavigate();
     const validationSchema = Yup.object({
         email: Yup.string()
