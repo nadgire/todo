@@ -12,10 +12,10 @@ const Dashboard = () => {
 
     const [alltasks, setAllTasks] = useState([]);
     const token = localStorage.getItem('token');
-    let IDsort = 0;
-    let titleSort = 0;
-    let dateSort = 0;
-    let completionSort = 0;
+    let [IDsort, setIDsort] = useState(0);
+    let [titleSort, setTitleSort] = useState(0);
+    let [dateSort, setDateSort] = useState(0);
+    let [completionSort, setCompletionSort] = useState(0);
 
     const validationSchema = Yup.object({
         title: Yup.string()
@@ -62,27 +62,32 @@ const Dashboard = () => {
         console.log(event.currentTarget.id);
         if (event.currentTarget.id == 'taskID') {
             if (IDsort % 2 == 0) {
-                IDsort = IDsort + 1;
+                console.log(IDsort);
+                setIDsort(IDsort = IDsort + 1)
                 const sortedTasks = alltasks.sort((a, b) => a.ID.localeCompare(b.ID));
+                console.log(sortedTasks);
                 setAllTasks(sortedTasks);
             }
-
-            if (IDsort % 2 == 1) {
-                IDsort = IDsort + 1;
+            else {
+                console.log(IDsort);
+                setIDsort(IDsort = IDsort + 1)
                 const sortedTasks = alltasks.sort((a, b) => b.ID.localeCompare(a.ID));
+                console.log(sortedTasks);
                 setAllTasks(sortedTasks);
             }
         }
 
         if (event.currentTarget.id == 'taskTitle') {
             if (titleSort % 2 == 0) {
-                titleSort = titleSort + 1;
+                console.log(titleSort);
+                setTitleSort(titleSort = titleSort + 1)
                 const sortedTasks = alltasks.sort((a, b) => a.title.localeCompare(b.title));
                 setAllTasks(sortedTasks);
             }
 
-            if (titleSort % 2 == 1) {
-                titleSort = titleSort + 1;
+            else {
+                console.log(titleSort);
+                setTitleSort(titleSort = titleSort + 1)
                 const sortedTasks = alltasks.sort((a, b) => b.title.localeCompare(a.title));
                 setAllTasks(sortedTasks);
             }
@@ -90,15 +95,17 @@ const Dashboard = () => {
 
         if (event.currentTarget.id == 'taskDueDate') {
             if (dateSort % 2 == 0) {
-                dateSort = dateSort + 1;
+                console.log(dateSort);
+                setDateSort(dateSort = dateSort + 1)
                 const sortedByDueDate = alltasks.sort((a, b) =>
                     new Date(a.dueDate) - new Date(b.dueDate)
                 );
                 setAllTasks(sortedByDueDate);
             }
 
-            if (dateSort % 2 == 1) {
-                dateSort = dateSort + 1;
+            else {
+                console.log(dateSort);
+                setDateSort(dateSort = dateSort + 1)
                 const sortedByDueDate = alltasks.sort((a, b) =>
                     new Date(b.dueDate) - new Date(a.dueDate)
                 );
@@ -108,17 +115,19 @@ const Dashboard = () => {
 
         if (event.currentTarget.id == 'taskCompletion') {
             if (completionSort % 2 == 0) {
-                completionSort = completionSort + 1;
+                console.log(completionSort);
+                setCompletionSort(completionSort = completionSort + 1)
                 const sortedByCompletion = alltasks.sort((a, b) =>
-                    b.isCompleted - a.isCompleted 
+                    b.isCompleted - a.isCompleted
                 );
                 setAllTasks(sortedByCompletion);
             }
 
-            if (completionSort % 2 == 1) {
-                completionSort = completionSort + 1;
+            else {
+                console.log(completionSort);
+                setCompletionSort(completionSort = completionSort + 1)
                 const sortedByCompletion = alltasks.sort((a, b) =>
-                    a.isCompleted - b.isCompleted 
+                    a.isCompleted - b.isCompleted
                 );
                 setAllTasks(sortedByCompletion);
             }
