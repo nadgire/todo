@@ -36,7 +36,7 @@ const Register = () => {
             if (response.data.message === 'User registered successfully') {
                 toast.success(response.data.message);
                 setTimeout(() => {
-                    navigate('https://simplytodomanager.netlify.app/');
+                    navigate('/');
                 }, 3000);
             }
             else {
@@ -131,7 +131,7 @@ const Register = () => {
                                     </button>
                                 </div>
                                 <div className='flex flex-col gap-1'>
-                                    <Link to={'https://simplytodomanager.netlify.app/'} className='mx-auto w-fit'>
+                                    <Link to={'/'} className='mx-auto w-fit'>
                                         Already a user? Login here!
                                     </Link>
                                 </div>

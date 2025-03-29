@@ -16,7 +16,7 @@ const Header = (props) => {
     function funLogout() {
         try {
             localStorage.removeItem('token');
-            navigate('https://simplytodomanager.netlify.app/');
+            navigate('/');
             window.location.reload();
         } catch (error) {
             console.error('Logout failed:', error);

@@ -32,7 +32,7 @@ const Login = () => {
             if (response.data.message === 'Login successful') {
                 localStorage.setItem('token', response.data.token);
 
-                navigate('https://simplytodomanager.netlify.app/dashboard');
+                navigate('/dashboard');
                 window.location.reload();
 
             }
@@ -73,10 +73,10 @@ const Login = () => {
                                     </button>
                                 </div>
                                 <div className='flex flex-col gap-1'>
-                                    <Link to={'https://simplytodomanager.netlify.app/register'} className='mx-auto w-fit'>
+                                    <Link to={'/register'} className='mx-auto w-fit'>
                                         New user? Register here!
                                     </Link>
-                                    <Link to={'https://simplytodomanager.netlify.app/reset-password'} className='mx-auto w-fit'>
+                                    <Link to={'/reset-password'} className='mx-auto w-fit'>
                                         Forgot password?
                                     </Link>
                                 </div>
