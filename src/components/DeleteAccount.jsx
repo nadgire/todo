@@ -26,7 +26,7 @@ const DeleteAccount = (props) => {
                 props.divFlag(false);
                 toast.success(response.data.message);
                 localStorage.removeItem('token');
-                navigate('/');
+                navigate('https://simplytodomanager.netlify.app/');
                 window.location.reload();
             }
             else {

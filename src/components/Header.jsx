@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { FaCaretDown } from "react-icons/fa";
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ChangePassword from './ChangePassword';
 import DeleteAccount from './DeleteAccount';
 
@@ -16,7 +16,7 @@ const Header = (props) => {
     function funLogout() {
         try {
             localStorage.removeItem('token');
-            navigate('/');
+            navigate('https://simplytodomanager.netlify.app/');
             window.location.reload();
         } catch (error) {
             console.error('Logout failed:', error);

@@ -93,7 +93,7 @@ const ResetPassword = () => {
             if (response.data.message === 'Password reset successful') {
                 toast.success(response.data.message);
                 setTimeout(() => {
-                    navigate('/');
+                    navigate('https://simplytodomanager.netlify.app/');
                     window.location.reload();
                 }, 2000);
             }
@@ -146,7 +146,7 @@ const ResetPassword = () => {
                                 )}
 
                                 <div className='flex flex-col gap-1'>
-                                    <Link to={'/'} className='mx-auto w-fit'>
+                                    <Link to={'https://simplytodomanager.netlify.app/'} className='mx-auto w-fit'>
                                         Already a user? Login here!
                                     </Link>
                                 </div>

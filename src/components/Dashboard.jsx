@@ -102,14 +102,14 @@ const Dashboard = () => {
     useEffect(() => {
 
         if (!token) {
-            navigate('/')
+            navigate('https://simplytodomanager.netlify.app/')
         }
         else {
             const decodedToken = jwtDecode(token);
             const currentTime = Date.now() / 1000;
             if (decodedToken.exp < currentTime) {
                 localStorage.removeItem('token');
-                navigate('/')
+                navigate('https://simplytodomanager.netlify.app/')
             }
             else {
                 toast.success("Welcomme " + decodedToken.username, { toastId: 'login-success' });
