@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import { Formik, Field, ErrorMessage } from 'formik';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import * as Yup from 'yup';
 
 const ChangePassword = (props) => {
@@ -44,6 +44,10 @@ const ChangePassword = (props) => {
             setIsSubmitting(false);
         }
 
+    }
+
+    function funClose() {
+        props.divFlag(false);
     }
 
     return (
@@ -105,6 +109,7 @@ const ChangePassword = (props) => {
                                 <button
                                     type="button"
                                     className="w-1/2 bg-indigo-500 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:bg-indigo-600"
+                                    onClick={funClose}
                                 >
                                     Cancel
                                 </button>

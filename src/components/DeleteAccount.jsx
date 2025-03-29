@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import { Formik, Field, ErrorMessage } from 'formik';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,6 +39,10 @@ const DeleteAccount = (props) => {
         }
     }
 
+    function funClose() {
+        props.divFlag(false);
+    }
+
     return (
         <div className='absolute flex items-center h-screen w-screen left-0 top-0'>
             <div className='bg-[rgba(0,0,0,0.9)] p-10 mx-auto text-center w-1/4 text-white rounded-lg'>
@@ -72,6 +76,7 @@ const DeleteAccount = (props) => {
                                 <button
                                     type="button"
                                     className="w-1/2 bg-indigo-500 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:bg-indigo-600"
+                                    onClick={funClose}
                                 >
                                     Cancel
                                 </button>
