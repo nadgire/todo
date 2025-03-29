@@ -32,6 +32,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="*" element={<Navigate to="/" />} />
           <Route path="/" element={token && !isTokenExpired(token) ? <Navigate to="/dashboard" /> : <Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reset-password" element={<ResetPassword />} />
