@@ -50,7 +50,7 @@ const DeleteAccount = (props) => {
 
                     {({ handleChange, handleSubmit, handleReset, values, handleBlur }) => (
                         <form onSubmit={handleSubmit}>
-                            <h3 className='text-xl font-semibold mb-5'>Change Password</h3>
+                            <h3 className='text-xl font-semibold mb-5'>Delete Account</h3>
 
                             <Field
                                 type="password"
